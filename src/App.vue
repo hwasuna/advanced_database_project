@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+
+    <!-- Route dynamique : le contenu dépend de la route active -->
+    <router-view />
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  export default {
+    name: "App",
+    components: {
+
+    },
+    data() {
+      return {
+        scrolledPastHeader: false, // Contrôle si l'utilisateur a défilé
+      };
+    },
+    methods: {
+      handleScroll() {
+        const header = this.$refs.header?.$el;
+        const headerHeight = header ? header.offsetHeight : 100; // Mesure la hauteur réelle
+        this.scrolledPastHeader = window.scrollY > headerHeight;
+      },
+    },
+    mounted() {
+      window.addEventListener("scroll", this.handleScroll); // Attache l'événement scroll
+    },
+    beforeUnmount() {
+      window.removeEventListener("scroll", this.handleScroll); // Nettoie l'événement
+    },
+  };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+/* Global styles */
+body {
+  margin: 0;
+  background-color: white;
+  color: white;
+}
+*{
+  font-family: 'Banks Miles Single Line';
 }
 </style>
